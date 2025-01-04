@@ -18,13 +18,26 @@ public class CartaMagica extends Carta {
     }
 
     //toString
+    @Override
+    public String toString() {
+        return "~~~~~~~~~ CARTA MÁGICA ~~~~~~~~~\n" +
+               super.getNombre() + "\n" +
+               "Tipo: " + this.tipoMonstruo + "\n" +
+               "Incremento Ataque: " + this.incrementoAtaque + "\n" +
+               "Incremento Defensa: " + this.incrementoDefensa + "\n" +
+               "~~~~~~~~~ Descripción ~~~~~~~~~\n" +
+               super.getDescripcion() + "\n" +
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+    }
+
+    public String toString2() {
+        return "CARTA MÁGICA || " + this.getNombre() + 
+               " [INC ATK: " + this.incrementoAtaque + 
+               ", INC DEF: " + this.incrementoDefensa + 
+               "] Tipo: " + this.tipoMonstruo;
+    }
 
 
-
-
-
-
-    
     //getter and setters
     public int getIncrementoAtaque() {
         return incrementoAtaque;

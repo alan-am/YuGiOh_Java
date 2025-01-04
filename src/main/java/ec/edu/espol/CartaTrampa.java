@@ -11,8 +11,23 @@ public class CartaTrampa extends Carta {
     }
 
     //toString
-   
 
+    @Override
+    public String toString() {
+        return "................. CARTA TRAMPA .................\n" +
+               super.getNombre() + "\n" +
+               "    Atributo: " + this.tipoAtributo + "\n" +
+               "................. Descripción .................\n" +
+               super.getDescripcion() + "\n" +
+               ".............................................";
+    }
+       
+
+    public String toString2() {
+        return "CARTA TRAMPA || " + this.getNombre() +
+               " Atributo: " + this.tipoAtributo;
+    }
+    
 
 
 

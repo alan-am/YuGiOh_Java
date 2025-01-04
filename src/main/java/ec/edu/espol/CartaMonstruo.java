@@ -22,12 +22,39 @@ public class CartaMonstruo extends Carta{
         this.isBocaArriba = true;
         this.cartaMagica = null;
     }
+
+
     //toString
+    @Override
+    public String toString() {
+        return "------------------- CARTA MONSTRUO -------------------\n" +
+               super.getNombre() + "\n" +
+               "    Tipo: " + this.tipoMonstruo + "   Atributo: " + this.tipoAtributo + "\n" +
+               "    ATK: " + this.ataque + "               DEF: " + this.defensa + "\n" +
+               (this.isInAtaque ? "    MODO DE ATAQUE: Sí\n" : "    MODO DE ATAQUE: No\n") +
+               "------------------- Descripción -------------------\n" +
+               super.getDescripcion() + "\n" +
+               "---------------------------------------------------";
+    }
+    
 
+    public String toString2() {
+        String modo = this.isInAtaque ? "Ataque" : "Defensa";
+        return "CARTA MONSTRUO || " + this.getNombre() +
+               " [MODO " + modo + "]" +
+               " [ATK: " + this.ataque + ", DEF: " + this.defensa + "]" +
+               "   Tipo: " + this.tipoMonstruo + ", ATR: " + this.tipoAtributo;
+    }
 
-
-
-
+    public String toString3() {
+        String modo = this.isInAtaque ? "Ataque" : "Defensa";
+        return "CARTA MONSTRUO || " + this.getNombre() +
+               " [MODO " + modo + "]" +
+               " [ATK: " + this.ataque + " + " + this.cartaMagica.getIncrementoAtaque() +
+               ", DEF: " + this.defensa + " + " + this.cartaMagica.getIncrementoDefensa() + "]" +
+               "   Tipo: " + this.tipoMonstruo;
+    }
+    
     
 
     //getters and setters
