@@ -11,7 +11,7 @@ public class CartaTrampa extends Carta {
     }
 
     //toString
-
+   
 
 
 
