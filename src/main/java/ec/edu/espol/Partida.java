@@ -2,8 +2,7 @@ package ec.edu.espol;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import ec.edu.espol.Jugador;
-
+import ec.edu.espol.Partida;
 
 public class Partida {
 
@@ -21,13 +20,17 @@ public class Partida {
 
     //metodos
 
-    public void ronda(){
+    @SuppressWarnings("resource")
+    public void ronda()
+    {
        Jugador j1 = this.getTablero().getJugador1();
        Jugador maquina = this.getTablero().getJugador2();
        int jugadorActual = this.getJugadorActual();
 
-       if(this.getRonda()==1){
-        for(int i=0;i<2;i++){
+       if(this.getRonda()==1)
+       {
+        for(int i=0;i<2;i++)
+        {
             faseTomarCarta(j1,maquina);
             fasePrincipal(j1,maquina);
             System.out.println(this.getTablero().toString());
@@ -35,8 +38,10 @@ public class Partida {
         System.out.println("--- Es su primer turno, no puede declarar batalla");
         }
        } else {
-            for(int i=0;i<2;i++){
-                if(!j1.esDerrotado() && !maquina.esDerrotad()){
+            for(int i=0;i<2;i++)
+            {
+                if(!j1.esDerrotado() && !maquina.esDerrotado())
+                {
                     faseTomarCarta(j1,maquina);
                     System.out.println("-".repeat(30));
                     fasePrincipal(j1,maquina);
@@ -46,12 +51,13 @@ public class Partida {
                     System.out.println("> Da Enter para mostrar el tablero actualizado");
                     new java.util.Scanner(System.in).nextLine(); 
                     System.out.println(this.getTablero().toString()); 
-                    resetearEstadoCartasMounstro2();
+                    resetearEstadoCartasMonstruo();
                     cambiarTurno();
                 }
             }
        }
-       if(!j1.esDerrotado() && !maquina.esDerrotado()) {
+       if(!j1.esDerrotado() && !maquina.esDerrotado()) 
+       {
         this.ronda++;
         System.out.println("Presione Enter para comenzar una nueva ronda");
         new java.util.Scanner(System.in).nextLine();
@@ -61,8 +67,7 @@ public class Partida {
         }
     }
     
-
-
+    @SuppressWarnings("resource")
     public void faseTomarCarta(Jugador j1, Jugador j2) {
         if (this.turno <= 3 && (j1.getCartasEnMano().isEmpty() || j2.getCartasEnMano().isEmpty())) {
             if (j1.getId() == this.jugadorActual) {
@@ -87,7 +92,8 @@ public class Partida {
     }
 
 
-      public void fasePrincipal(Jugador j1, Jugador maquina) {
+      @SuppressWarnings("resource")
+    public void fasePrincipal(Jugador j1, Jugador maquina) {
         if (jugadorActual == 1) {
             j1.setNoAgregoMonstruo(true);
             System.out.println("|--> Presiona enter para visualizar tus cartas en mano ");

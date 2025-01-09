@@ -1,0 +1,31 @@
+Nombre, Tipo, Atributo, ATK, DEF, Descripción
+Dragón Blanco de Ojos Azules, D, LUZ, 3000, 2500, Un legendario dragón poderoso.
+Mago Oscuro, L, OSCURIDAD, 2500, 2100, El mago definitivo en ataque y defensa.
+Cráneo Convocado, O, OSCURIDAD, 2500, 1200, Un demonio con poderosas habilidades ofensivas.
+Hada Guardiana Eatos, G, VIENTO, 2500, 2000, Un guerrero divino con alas celestiales.
+Tigre de la Llama, B, FUEGO, 1800, 1200, Una bestia feroz cubierta en llamas.
+Dragón Negro de Ojos Rojos, D, OSCURIDAD, 2400, 2000, Un dragón que quema con fuego oscuro.
+Rey Calavera, Z, OSCURIDAD, 2000, 1500, Un zombi que revive con un poderoso ritual.
+Amazonas Espadachina, G, TIERRA, 1500, 1200, Una guerrera ágil que defiende su tribu.
+Espadachín Silencioso, G, LUZ, 2300, 1000, Un espadachín que silencia a sus oponentes.
+Caballero Gema, G, TIERRA, 1900, 1600, Un guerrero cubierto de piedras preciosas.
+Dragón Tornado, D, VIENTO, 2100, 1500, Un dragón que genera huracanes devastadores.
+Dama Harpía, B, VIENTO, 1300, 1400, Una guerrera alada que lucha con ferocidad.
+Guerrero Cibernético, G, LUZ, 1800, 1000, Un guerrero mejorado con tecnología avanzada.
+Gigante Soldado de Piedra, G, TIERRA, 1300, 2000, Una estatua viviente con una defensa sólida.
+Espíritu Oscuro, Z, OSCURIDAD, 1900, 1500, Un zombi que asusta a sus enemigos.
+Pegaso Reluciente, B, LUZ, 1200, 1000, Una bestia con un aura celestial.
+Fenrir del Norte, B, AGUA, 2000, 1200, Un lobo místico que gobierna el hielo.
+Dragón de Lava, D, FUEGO, 1600, 1000, Un dragón que escupe lava ardiente.
+Guardia del Santuario, G, TIERRA, 1000, 2000, Un defensor de un antiguo templo sagrado.
+Asesino de las Sombras, O, OSCURIDAD, 2200, 1500, Un demonio que ataca desde las sombras.
+Dragón Relámpago, D, LUZ, 2400, 1600, Un dragón que controla el poder de los rayos.
+Armadillo Blindado, B, TIERRA, 1500, 2100, Una bestia con una defensa casi impenetrable.
+Esqueleto Viviente, Z, OSCURIDAD, 1000, 800, Un esqueleto que se mueve por magia oscura.
+Dragón del Océano, D, AGUA, 2000, 1800, Un dragón que reina sobre los mares.
+Guerrero Elemental, G, FUEGO, 1900, 1400, Un guerrero que domina los elementos.
+Druida de las Llamas, L, FUEGO, 1700, 1500, Un mago que invoca fuegos mágicos.
+Bestia de la Tormenta, B, VIENTO, 1800, 1200, Una bestia que cabalga sobre tormentas.
+Espectro de Hielo, Z, AGUA, 1500, 1000, Un zombi congelado en el tiempo.
+León Escarlata, B, FUEGO, 2000, 1700, Una bestia feroz con una melena ardiente.
+Caballero de la Luz, G, LUZ, 1600, 1500, Un noble guerrero que lucha por la justicia.

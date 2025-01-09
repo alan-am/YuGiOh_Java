@@ -1,0 +1,16 @@
+Formato: Nombre, Descripción, IncrementoAtaque, IncrementoDefensa, TipoDeMonstruo
+Espada del Guerrero, Incrementa el ataque de monstruos tipo Guerrero, 200, 0, G
+Escudo del Guerrero, Incrementa la defensa de monstruos tipo Guerrero, 0, 200, G
+Aliento del Dragón, Incrementa el ataque de monstruos tipo Dragón, 300, 0, D
+Escudo del Dragón, Incrementa la defensa de monstruos tipo Dragón, 0, 300, D
+Fuerza Demoníaca, Incrementa el ataque de monstruos tipo Demonio, 400, 0, O
+Escudo Infernal, Incrementa la defensa de monstruos tipo Demonio, 0, 400, O
+Colmillos de la Bestia, Incrementa el ataque de monstruos tipo Bestia, 250, 0, B
+Refugio Bestial, Incrementa la defensa de monstruos tipo Bestia, 0, 250, B
+Ritual Zombi, Incrementa el ataque de monstruos tipo Zombi, 350, 0, Z
+Cloak of the Undead, Incrementa la defensa de monstruos tipo Zombi, 0, 350, Z
+Magia del Hechicero, Incrementa el ataque de monstruos tipo Lanzador de Conjuros, 150, 0, L
+Escudo de Conjuro, Incrementa la defensa de monstruos tipo Lanzador de Conjuros, 0, 150, L
+Maldición del Guerrero, Incrementa el ataque de monstruos tipo Guerrero, 250, 0, G
+Aliento del Dragón Anciano, Incrementa la defensa de monstruos tipo Dragón, 0, 400, D
+Luz Sagrada, Incrementa el ataque de monstruos tipo Lanzador de Conjuros, 200, 0, L

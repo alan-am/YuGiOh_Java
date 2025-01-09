@@ -11,7 +11,7 @@ public class CartaMonstruo extends Carta{
     private boolean puedeAtacar;   // indica si ya ha atacado en el turno
     private CartaMagica cartaMagica; //un monstruo puede estar asociado a una carta magica que incremente sus atributos
 
-    public CartaMonstruo(String nombre, String descripcion, TipoAtributo tipoAtributo, TipoMonstruo tipoMonstruo, int ataque, int defensa){
+    public CartaMonstruo(String nombre, String descripcion,int ataque, int defensa, TipoAtributo tipoAtributo, TipoMonstruo tipoMonstruo){
         super(nombre, descripcion);
         this.tipoAtributo = tipoAtributo;
         this.tipoMonstruo = tipoMonstruo;
@@ -22,6 +22,7 @@ public class CartaMonstruo extends Carta{
         this.isBocaArriba = true;
         this.cartaMagica = null;
     }
+
 
 
     //toString
@@ -120,6 +121,20 @@ public class CartaMonstruo extends Carta{
 
     public void setCartaMagica(CartaMagica cartaMagica) {
         this.cartaMagica = cartaMagica;
+    }
+
+
+
+	public boolean getIsBocaArriba() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getIsBocaArriba'");
+	}
+
+
+
+    public boolean getIsInAtaque() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getIsInAtaque'");
     }
 
     

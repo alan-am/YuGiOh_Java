@@ -1,0 +1,11 @@
+Nombre, Descripción, Atributo(ignorar las descripciones xd, deben ser corregidas de acuerdo al juego)
+Tornado de Polvo, Detiene el ataque de un monstruo con el atributo VIENTO, VIENTO
+Ciclón Mágico, Destruye una carta mágica o trampa en el campo, LUZ
+Rayo Trampa, Detiene el ataque de un monstruo con el atributo AGUA, AGUA
+Sello de la Fuerza, Detiene el ataque de un monstruo con el atributo FUEGO, FUEGO
+Reflejo del Alma, Protege un monstruo de los efectos de otras cartas trampa, OSCURIDAD
+Trampa de Destrucción, Destruye todas las cartas de magia y trampa en el campo, TIERRA
+Fuerza Mortal, Detiene el ataque de un monstruo con el atributo TIERRA, TIERRA
+Piedra Imparable, No permite que un monstruo cambie de posición de ataque a defensa, FUEGO
+Alerta Rápida, Permite que un monstruo cambie su posición de defensa a ataque, LUZ
+Campo de Negación, Niega el ataque de un monstruo con el atributo LUZ, LUZ
