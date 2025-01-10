@@ -1,14 +1,7 @@
 package ec.edu.espol;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import ec.edu.espol.CartaMonstruo;
-import ec.edu.espol.Carta;
-import ec.edu.espol.Tablero;
-import ec.edu.espol.Partida;
-import ec.edu.espol.Deck;
-import ec.edu.espol.CartaMagica;
 
 public class Jugador {
     public static int jugadores; //contador de instancias
@@ -88,6 +81,7 @@ public class Jugador {
         } else {
             System.out.println("WARNING| No existen cartas Monstruo boca Arriba para cambiar su posición");
         }
+        sc.close();
     }
 
 
@@ -325,9 +319,9 @@ public class Jugador {
         }
     }
     
-    public List<String> listarCartasEnMano() {
+    public ArrayList<String> listarCartasEnMano() {
         // Retorna una lista solo con los nombres de las cartas en la mano
-        List<String> nombresCartas = new ArrayList<>();
+        ArrayList<String> nombresCartas = new ArrayList<>();
         for (Carta carta : this.cartasEnMano) {
             nombresCartas.add(carta.getNombre());
         }
@@ -340,9 +334,9 @@ public class Jugador {
         scanner.nextLine();
     
         // Obtener monstruos en ataque que pueden atacar
-        List<CartaMonstruo> monstruosAtacantes = new ArrayList<>();
-        List<CartaMagica> cartasMagicas = new ArrayList<>();
-        List<CartaTrampa> cartasTrampa = new ArrayList<>();
+        ArrayList<CartaMonstruo> monstruosAtacantes = new ArrayList<>();
+        ArrayList<CartaMagica> cartasMagicas = new ArrayList<>();
+        ArrayList<CartaTrampa> cartasTrampa = new ArrayList<>();
     
         for (Carta carta : tablero.getTableroCompartido().get(this.getId()).get("CartasMonstruo")) {
             CartaMonstruo carta_c = (CartaMonstruo)carta;
@@ -442,7 +436,7 @@ public class Jugador {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Loading....");
         // mano_maquina sería la lista de cartas en mano del jugador
-        List<Carta> manoMaquina = getCartasEnMano();
+        ArrayList<Carta> manoMaquina = new ArrayList<>(getCartasEnMano()); //debe ser una copiar para que no se modifique
         System.out.println("");
 
         // Colocar cartas de monstruo
@@ -465,7 +459,8 @@ public class Jugador {
 
         System.out.println(getNombre() + " ha terminado de organizar su tablero.");
         System.out.println("Enter para seguir");
-        scanner.nextLine(); // pausa para seguir
+        System.out.println("Le quite el enter porque da muchos problemas");
+        System.out.println("");
         scanner.close();
     }
 
@@ -548,3 +543,4 @@ public class Jugador {
     
 
 }
+

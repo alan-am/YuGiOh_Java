@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Deck {
     
@@ -24,12 +23,12 @@ public class Deck {
     
     //METODOS
 
-    public List<Carta> cargarCartas() {
-        List<Carta> baraja = new ArrayList<>();
+    public ArrayList<Carta> cargarCartas() {
+        ArrayList<Carta> baraja = new ArrayList<>();
         
         // Procesamiento de cartas monstruo
-        List<Carta> cartasMonstruo = new ArrayList<>();
-        try (BufferedReader archivo = new BufferedReader(new FileReader("src/archivoCartasMonstruo.txt"))) {
+        ArrayList<Carta> cartasMonstruo = new ArrayList<>();
+        try (BufferedReader archivo = new BufferedReader(new FileReader("archivoCartasMonstruo.txt"))) {
             archivo.readLine(); // Salta la primera línea
             String linea;
             while ((linea = archivo.readLine()) != null) {
@@ -44,6 +43,7 @@ public class Deck {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("no encontró el archivo de cartas monstruo, no se guardó");
         }
         
         // Barajear las cartas monstruo
@@ -55,8 +55,8 @@ public class Deck {
         }
 
         // Procesamiento de cartas mágicas
-        List<Carta> cartasMagicas = new ArrayList<>();
-        try (BufferedReader archivo = new BufferedReader(new FileReader("src/archivoCartasMagicas.txt"))) {
+        ArrayList<Carta> cartasMagicas = new ArrayList<>();
+        try (BufferedReader archivo = new BufferedReader(new FileReader("archivoCartasMagicas.txt"))) {
             archivo.readLine(); // Salta la primera línea
             String linea;
             while ((linea = archivo.readLine()) != null) {
@@ -69,7 +69,7 @@ public class Deck {
                 cartasMagicas.add(new CartaMagica(nombre, descripcion, incrementoAtaque, incrementoDefensa, TipoMonstruo.valueOf(tipoMonstruo)));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("no encontró las cartas mágicas, problemas al abrir el canal");
         }
 
         // Barajear las cartas mágicas
@@ -81,8 +81,8 @@ public class Deck {
         }
 
         // Procesamiento de cartas trampas
-        List<Carta> cartasTrampas = new ArrayList<>();
-        try (BufferedReader archivo = new BufferedReader(new FileReader("src/archivoCartasTrampa.txt"))) {
+        ArrayList<Carta> cartasTrampas = new ArrayList<>();
+        try (BufferedReader archivo = new BufferedReader(new FileReader("archivoCartasTrampa.txt"))) {
             archivo.readLine(); // Salta la primera línea
             String linea;
             while ((linea = archivo.readLine()) != null) {
@@ -93,7 +93,7 @@ public class Deck {
                 cartasTrampas.add(new CartaTrampa(nombre, descripcion, TipoAtributo.valueOf(atributo)));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("problemas con el canal de las cartas trampa");
         }
 
         // Barajear las cartas trampas
@@ -110,7 +110,7 @@ public class Deck {
         return baraja;
     }
 
-     public void barajear(List<Carta> baraja2) {
+     public void barajear(ArrayList<Carta> baraja2) {
                             Collections.shuffle(baraja2);
     }
 

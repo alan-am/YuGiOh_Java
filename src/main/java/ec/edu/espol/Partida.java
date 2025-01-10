@@ -1,5 +1,5 @@
 package ec.edu.espol;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import ec.edu.espol.Partida;
@@ -19,13 +19,11 @@ public class Partida {
     }
 
     //metodos
-
-    @SuppressWarnings("resource")
     public void ronda()
     {
        Jugador j1 = this.getTablero().getJugador1();
        Jugador maquina = this.getTablero().getJugador2();
-       int jugadorActual = this.getJugadorActual();
+       //int jugadorActual = this.getJugadorActual(); no es necesario
 
        if(this.getRonda()==1)
        {
@@ -47,9 +45,9 @@ public class Partida {
                     fasePrincipal(j1,maquina);
                     System.out.println("-".repeat(30));
                     faseBatalla(j1,maquina);
-                    this.getTablero().destruirCartaMagica(jugadorActual);
                     System.out.println("> Da Enter para mostrar el tablero actualizado");
-                    new java.util.Scanner(System.in).nextLine(); 
+                    //new java.util.Scanner(System.in).nextLine(); 
+                    System.out.println("-------------------------------enter eliminado");
                     System.out.println(this.getTablero().toString()); 
                     resetearEstadoCartasMonstruo();
                     cambiarTurno();
@@ -60,14 +58,14 @@ public class Partida {
        {
         this.ronda++;
         System.out.println("Presione Enter para comenzar una nueva ronda");
-        new java.util.Scanner(System.in).nextLine();
+        //new java.util.Scanner(System.in).nextLine();
+        System.out.println("--------------------------enter eliminado");
         System.out.println("Loading...");
         System.out.println("------> Ronda " + this.ronda + " comienza:");
         System.out.println("==".repeat(40));
         }
     }
     
-    @SuppressWarnings("resource")
     public void faseTomarCarta(Jugador j1, Jugador j2) {
         if (this.turno <= 3 && (j1.getCartasEnMano().isEmpty() || j2.getCartasEnMano().isEmpty())) {
             if (j1.getId() == this.jugadorActual) {
@@ -81,7 +79,8 @@ public class Partida {
             if (jugadorActual == 1) {
                 System.out.println("-Es tu turno de robar una carta-");
                 System.out.println("Presiona enter para tomar la carta del Deck...");
-                new java.util.Scanner(System.in).nextLine();
+                //new java.util.Scanner(System.in).nextLine();
+                System.out.println("------------------------------enter eliminado para evitar problemas");
                 j1.tomarCartaEnTurno();
             } else {
                 System.out.println("-".repeat(30) + " Turno de la máquina " + "-".repeat(30));
@@ -92,28 +91,32 @@ public class Partida {
     }
 
 
-      @SuppressWarnings("resource")
+      //@SuppressWarnings("resource")
     public void fasePrincipal(Jugador j1, Jugador maquina) {
+        Scanner sc = new Scanner(System.in);
+        String eleccion;
         if (jugadorActual == 1) {
             j1.setNoAgregoMonstruo(true);
             System.out.println("|--> Presiona enter para visualizar tus cartas en mano ");
-            new Scanner(System.in).nextLine();
+            //new Scanner(System.in).nextLine();
+            System.out.println("enter quitado para evitar problemas--------------------------------------");
             j1.imprimirMano();
-            System.out.println("Desea añadir una carta en su tablero?");
-            Scanner scanner = new Scanner(System.in);
-            String eleccion;
-            do {
-                System.out.println("1. Si \n2. No");
-                eleccion = scanner.nextLine();
-                if ("1".equals(eleccion)) {
-                    j1.jugarCarta(this);
-                }
-            } while ("1".equals(eleccion));
-
+            System.out.println("Desea añadir una carta a su tabler?");
+            System.out.println("1.Si\n2.No");
+            eleccion = sc.nextLine();
+            System.out.println(eleccion);
+            while (eleccion.equals("1")){
+                j1.jugarCarta(this);
+                System.out.println("Desea añadir una carta en su tablero?");
+                System.out.println("1.Si\n2.No");
+                eleccion = sc.nextLine();
+            }
         } else {
             maquina.setNoAgregoMonstruo(true);
             maquina.llenarTableroMaquina(tablero);
         }
+        sc.close();
+
     }
 
 
@@ -149,13 +152,15 @@ public class Partida {
     public void resetearEstadoCartasMonstruo() {
         int idJ1 = tablero.getJugador1().getId();
         int idJ2 = tablero.getJugador2().getId();
-        List<CartaMonstruo> cartasMonstruoJ1 = tablero.getCartasMonstruo(idJ1);
-        List<CartaMonstruo> cartasMonstruoJ2 = tablero.getCartasMonstruo(idJ2);
-        for (CartaMonstruo carta : cartasMonstruoJ1) {
-            carta.setPuedeAtacar(true);
+        ArrayList<Carta> cartasMonstruoJ1 = tablero.getTableroCompartido().get(idJ1).get("CartasMonstruo");
+        ArrayList<Carta> cartasMonstruoJ2 = tablero.getTableroCompartido().get(idJ2).get("CartasMonstruo");
+        for (Carta carta : cartasMonstruoJ1) {
+            CartaMonstruo carta_c = (CartaMonstruo)carta;
+            carta_c.setPuedeAtacar(true);
         }
-        for (CartaMonstruo carta : cartasMonstruoJ2) {
-            carta.setPuedeAtacar(true);
+        for (Carta carta : cartasMonstruoJ2) {
+            CartaMonstruo carta_c = (CartaMonstruo)carta;
+            carta_c.setPuedeAtacar(true);
         }
     }
 
@@ -206,3 +211,4 @@ public class Partida {
 
     
 }
+

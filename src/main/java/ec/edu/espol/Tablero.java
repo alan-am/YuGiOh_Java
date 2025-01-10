@@ -31,7 +31,7 @@ public class Tablero {
     }
 
     public Jugador aniadirJugador() {
-        return new Jugador(null, null);
+        return new Jugador("Prueba", new Deck());
     }
 
     public void aniadirCartaTablero(Carta carta, int idJugador) {
@@ -156,7 +156,7 @@ public class Tablero {
 
             //1 Calculamos incrementos de ataque y defensa asociados
             int incAtkJugador = 0;
-            int incDefJugador = 0;
+            //int incDefJugador = 0; //no se está utikizando
             int incAtkEnemigo = 0;
             int incDefEnemigo = 0;
 
@@ -172,7 +172,7 @@ public class Tablero {
             //La carta del jugador tiene una carta magica asociada?
             if(cartaJugador.getCartaMagica() != null){
                 incAtkJugador = cartaJugador.getCartaMagica().getIncrementoAtaque();
-                incDefJugador = cartaJugador.getCartaMagica().getIncrementoDefensa();
+                //incDefJugador = cartaJugador.getCartaMagica().getIncrementoDefensa();
             }
 
 
@@ -254,13 +254,6 @@ public class Tablero {
 
 
     //Falta metodo toString
-
-    
-    
-
-
-
-
     
     //getters and setters
     public int getId() {
@@ -297,30 +290,3 @@ public class Tablero {
     
     
 }
-
-
-//METODOS OBSOLETOS
-
-
-// public void destruirCartaMagica(int idJugador) {
-//     List<CartaEspecial> espacioEspecialesJ = tableroCompartido.get(idJugador).get("CartasEspeciales");
-//     List<CartaMonstruo> espacioMonstruosJ = tableroCompartido.get(idJugador).get("CartasMonstruo");
-//     List<CartaMagica> cartasMagicas = new ArrayList<>();
-//     List<String> tiposMonstruo = new ArrayList<>();
-
-//     for (CartaEspecial cartaEspecial : espacioEspecialesJ) {
-//         if (cartaEspecial instanceof CartaMagica) {
-//             cartasMagicas.add((CartaMagica) cartaEspecial);
-//         }
-//     }
-
-//     for (CartaMonstruo cartaMonstruo : espacioMonstruosJ) {
-//         tiposMonstruo.add(cartaMonstruo.getTipoMonstruo());
-//     }
-
-//     for (CartaMagica cartaMagica : cartasMagicas) {
-//         if (!tiposMonstruo.contains(cartaMagica.getTipoMonstruo())) {
-//             espacioEspecialesJ.remove(cartaMagica);
-//         }
-//     }
-// }
