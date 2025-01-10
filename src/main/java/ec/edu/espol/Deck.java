@@ -40,7 +40,7 @@ public class Deck {
                 int ataque= Integer.parseInt(lstDatos[3]);
                 int defensa = Integer.parseInt(lstDatos[4]);
                 String descripcion = lstDatos[5];
-                cartasMonstruo.add(new CartaMonstruo(nombre, descripcion, ataque, defensa, TipoMonstruo.valueOf(tipoMonstruo), TipoAtributo.valueOf(tipoAtributo)));
+                cartasMonstruo.add(new CartaMonstruo(nombre, descripcion, ataque, defensa, TipoAtributo.valueOf(tipoAtributo), TipoMonstruo.valueOf(tipoMonstruo)));
             }
         } catch (IOException e) {
             e.printStackTrace();
