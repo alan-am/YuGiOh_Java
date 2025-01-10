@@ -42,6 +42,17 @@ public class Carta {
         this.descripcion = descripcion;
     }
 
+    public String toString(){
+        return "Este es el toString1 de la Carta con ID: " + id;
+    }
+
+    public String toString2(){
+        return "Este es el toString2 de la Carta con ID: " + id;
+    }
+
+    public String toString3(){
+        return "Este es el toString3 de la Carta con ID: " + id;
+    }
     
 
 }

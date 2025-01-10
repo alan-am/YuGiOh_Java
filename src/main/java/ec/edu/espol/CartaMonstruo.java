@@ -91,15 +91,15 @@ public class CartaMonstruo extends Carta{
         this.defensa = defensa;
     }
 
-    public boolean isInAtaque() {
+    public boolean getisInAtaque() {
         return isInAtaque;
     }
 
-    public void setInAtaque(boolean isInAtaque) {
+    public void setisInAtaque(boolean isInAtaque) {
         this.isInAtaque = isInAtaque;
     }
 
-    public boolean isBocaArriba() {
+    public boolean getisBocaArriba() {
         return isBocaArriba;
     }
 
@@ -107,7 +107,7 @@ public class CartaMonstruo extends Carta{
         this.isBocaArriba = isBocaArriba;
     }
 
-    public boolean isPuedeAtacar() {
+    public boolean getPuedeAtacar() {
         return puedeAtacar;
     }
 

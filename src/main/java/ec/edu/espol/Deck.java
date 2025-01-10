@@ -114,6 +114,7 @@ public class Deck {
                             Collections.shuffle(baraja2);
     }
 
+    //Revisada
     // Devuelve una carta para el jugador tomada de la baraja y la elimina de la baraja
     public Carta robarCarta() {
         if (!baraja.isEmpty()) {

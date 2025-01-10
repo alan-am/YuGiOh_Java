@@ -35,35 +35,40 @@ public class Jugador {
     }
     //METODOS
 
+    //Revisada
     public void tomar5Cartas() {
         for (int i = 0; i < 5; i++) {
             tomarCartaEnTurno();
         }
     }
 
+    //Revisada
     // Método para tomar una carta en turno
     public void tomarCartaEnTurno() {
         Carta cartaTomada = this.deck.robarCarta();
         this.cartasEnMano.add(cartaTomada);
     }
 
+
+    //revisada
     // Método para cambiar la posición de ataque de una carta
     public void cambiarPosicionAtaque(Partida partida) {
         Tablero tablero = partida.getTablero();
-        List<Carta> espacioCartasMonstruo = tablero.getTableroCompartido().get(this.id).getCartasMonstruo();
-
+        ArrayList<Carta> espacioCartasMonstruo = tablero.getTableroCompartido().get(this.id).get("CartasMonstruo");
         System.out.println("¿Deseas cambiar la posición de una carta?");
         System.out.println("1. Sí");
         System.out.println("2. No");
+        //lectura de input
         Scanner sc = new Scanner(System.in);
         String eleccion = sc.nextLine();
 
+    
         while (!eleccion.equals("1") && !eleccion.equals("2")) {
             System.out.println("Elige un número entre 1 y 2");
             eleccion = sc.nextLine();
         }
 
-        if (eleccion.equals("1") && tablero.hayCartasMonstruoBocaArriba(this.id)) {
+        if (eleccion.equals("1") && tablero.hayCartasMonstruoBocaArriba(this)) {
             System.out.println("Selecciona la carta monstruo a cambiar:");
             int i = 0;
             for (Carta carta : espacioCartasMonstruo) {
@@ -78,7 +83,8 @@ public class Jugador {
             }
 
             Carta cartaSeleccionada = espacioCartasMonstruo.get(Integer.parseInt(seleccion) - 1);
-            cartaSeleccionada.setIsInAtaque(!cartaSeleccionada.getIsInAtaque());
+            CartaMonstruo cartaSeleccion = (CartaMonstruo)cartaSeleccionada; //evita errores de polimorfimo
+            cartaSeleccion.setisInAtaque(!cartaSeleccion.getisInAtaque()); 
         } else {
             System.out.println("WARNING| No existen cartas Monstruo boca Arriba para cambiar su posición");
         }
@@ -87,7 +93,7 @@ public class Jugador {
 
    public void declararBatalla(Jugador enemigo, Partida partida) {
         Tablero tablero = partida.getTablero();
-        List<Carta> espacioCartasMonstruoJ = tablero.getTableroCompartido().get(this.id).getCartasMonstruo();
+        ArrayList<Carta> espacioCartasMonstruoJ = tablero.getTableroCompartido().get(this.id).get("CartasMonstruo");
 
         // Validación si existen cartas monstruo
         if (espacioCartasMonstruoJ.isEmpty()) {
@@ -105,12 +111,13 @@ public class Jugador {
             eleccion = sc.nextLine();
         }
 
-        // Validación si existen cartas monstruo en ataque
+        // Validacion existen cartas monstruo en ataque
         while (tablero.hayCartasMonstruoEnAtaque(this) && eleccion.equals("1")) {
             System.out.println("Elige tu carta de ataque: ");
             int i = 0;
             for (Carta cartaMonstruo : espacioCartasMonstruoJ) {
-                System.out.println((i + 1) + ". " + cartaMonstruo.toString3());
+                
+                System.out.println((i + 1) + ". " + ((CartaMonstruo)cartaMonstruo).toString3());
                 i++;
             }
 
@@ -123,36 +130,46 @@ public class Jugador {
             }
 
             Carta cartaSeleccionada = espacioCartasMonstruoJ.get(Integer.parseInt(seleccion) - 1);
+            CartaMonstruo cartaSeleccion = (CartaMonstruo)cartaSeleccionada; //casting
 
             // Validamos si la carta está en modo ataque y puede atacar
-            if (cartaSeleccionada.getIsInAtaque() && cartaSeleccionada.getPuedeAtacar()) {
-                List<Carta> espacioEnemigo = tablero.getTableroCompartido().get(enemigo.getId()).getCartasMonstruo();
+            if (cartaSeleccion.getisInAtaque() && cartaSeleccion.getPuedeAtacar()) {
+                ArrayList<Carta> espacioEnemigo = tablero.getTableroCompartido().get(enemigo.getId()).get("CartasMonstruo");
 
                 if (espacioEnemigo.isEmpty()) {
                     // Ataque directo
-                    if (tablero.verificarCartaTrampa(enemigo, cartaSeleccionada) != null) {
+                    if (tablero.verificarCartaTrampa(enemigo, cartaSeleccion) != null) {
                         System.out.println("| Se ha atacado directamente! pero una carta Trampa se interpuso");
-                        Carta cartaTrampa = tablero.verificarCartaTrampa(enemigo, cartaSeleccionada);
+                        CartaTrampa cartaTrampa = tablero.verificarCartaTrampa(enemigo, cartaSeleccion);
+                        
                         System.out.println(cartaTrampa.getNombre() + " detiene el ataque de un monstruo con tipo de atributo " + cartaTrampa.getTipoAtributo());
                         System.out.println("| Carta Trampa eliminada del tablero");
                         tablero.quitarCartaTablero(cartaTrampa, enemigo.getId());
-                        cartaSeleccionada.setPuedeAtacar(false);
+                        cartaSeleccion.setPuedeAtacar(false);
                     } else {
                         // Ataque sin trampa
-                        int incAtkJugador = cartaSeleccionada.getCartaMagica().getIncrementoAtaque();
-                        int danio = cartaSeleccionada.getAtaque() + incAtkJugador;
+                        //verificamos si tiene una carta magica Asociada
+                        int incAtkJugador = 0;
+                        if(cartaSeleccion.getCartaMagica() != null){
+                            //si tiene asociada -> se guarda sus incrementos de ATK y DEF
+                            incAtkJugador = cartaSeleccion.getCartaMagica().getIncrementoAtaque();
+                        }
+                        
+                        int danio = cartaSeleccion.getAtaque() + incAtkJugador;
                         System.out.println("| Se ha atacado directamente con " + cartaSeleccionada.getNombre());
-                        System.out.println(" \t " + cartaSeleccionada.getAtaque() + "  +  " + incAtkJugador + " -->  " + enemigo.getPuntosVida() + " Puntos Vida " + enemigo.getNombre());
+                        System.out.println(" \t " + cartaSeleccion.getAtaque() + "  +  " + incAtkJugador + " -->  " + enemigo.getPuntosVida() + " Puntos Vida " + enemigo.getNombre());
                         enemigo.setPuntosVida(enemigo.getPuntosVida() - danio);
-                        cartaSeleccionada.setPuedeAtacar(false);
+                        cartaSeleccion.setPuedeAtacar(false);
                     }
                 } else {
+                    
                     // Elegir carta enemiga
                     System.out.println("Elige la carta Enemiga a atacar: ");
                     i = 0;
                     for (Carta cartaMonstruo : espacioEnemigo) {
-                        if (cartaMonstruo.getIsBocaArriba()) {
-                            System.out.println((i + 1) + ". " + cartaMonstruo.toString2());
+                        CartaMonstruo cartaMonstruo_c = (CartaMonstruo)cartaMonstruo;
+                        if (cartaMonstruo_c.getIsBocaArriba()) {
+                            System.out.println((i + 1) + ". " + cartaMonstruo_c.toString2());
                         } else {
                             System.out.println((i + 1) + ". CARTA MONSTRUO|| *** Carta boca abajo ***");
                         }
@@ -168,20 +185,27 @@ public class Jugador {
                     }
 
                     Carta cartaEnemigaSeleccionada = espacioEnemigo.get(Integer.parseInt(seleccion) - 1);
+                    CartaMonstruo cartaEnemigaSeleccion = (CartaMonstruo)cartaEnemigaSeleccionada;
 
                     // Ejecutar el ataque
-                    int danioAEnemigo = 0, danioAJugador = 0;
-                    danioAEnemigo = tablero.ataqueEntreCartas(cartaSeleccionada, cartaEnemigaSeleccionada, this, enemigo);
+                    Integer danioAEnemigo = 0;
+                    Integer danioAJugador = 0;
+                    //se devuelve una tupla
+                    Tupla tupla = tablero.ataqueEntreCartas(cartaSeleccion, cartaEnemigaSeleccion, this, enemigo);
+                    //descomprimimos la tupla
+                    danioAEnemigo =(Integer)tupla.getObj1();
+                    danioAJugador = (Integer)tupla.getObj1();
 
                     // Actualizar vida de los jugadores
                     this.puntosVida -= danioAJugador;
-                    enemigo.setPuntosVida(enemigo.getPuntosVida() - danioAEnemigo);
-                    cartaSeleccionada.setPuedeAtacar(false);
+                    enemigo.puntosVida -= danioAEnemigo;
+                    cartaSeleccion.setPuedeAtacar(false);
+
                 }
             } else {
-                if (cartaSeleccionada.getIsInAtaque()) {
+                if (cartaSeleccion.getIsInAtaque()) {
                     System.out.println("WARNING| La carta seleccionada ya ha atacado en este Turno.");
-                } else if (cartaSeleccionada.getPuedeAtacar()) {
+                } else if (cartaSeleccion.getPuedeAtacar()) {
                     System.out.println("WARNING| La carta seleccionada no está en modo de ataque");
                 }
             }
@@ -193,6 +217,7 @@ public class Jugador {
                 System.out.println("Elige un número entre 1 y 2");
                 eleccion = sc.nextLine();
             }
+            sc.close();
         }
     }
 
@@ -203,8 +228,9 @@ public class Jugador {
         Scanner scanner = new Scanner(System.in);
 
         // Mostrar las cartas en mano
-        System.out.println("Cartas en mano".center(40, "-"));
+        System.out.println("Cartas en mano");
         for (int i = 0; i < cartasEnMano.size(); i++) {
+            
             System.out.println((i + 1) + ". " + cartasEnMano.get(i).toString2());
         }
 
@@ -218,10 +244,11 @@ public class Jugador {
         }
 
         Carta cartaSeleccionada = cartasEnMano.get(Integer.parseInt(seleccion) - 1);
+        CartaMonstruo cartaSeleccion = (CartaMonstruo)cartaSeleccionada;
 
         // Si la carta es un monstruo
         if (cartaSeleccionada instanceof CartaMonstruo) {
-            if (tablero.getTableroCompartido().get(this.id).getCartasMonstruo().size() < 3 && noAgregoMonstruo) {
+            if (tablero.getTableroCompartido().get(this.id).get("CartasMonstruo").size() < 3 && noAgregoMonstruo) {
                 System.out.println("Elige el modo de la carta: ");
                 System.out.println("1. Modo Ataque");
                 System.out.println("2. Modo Defensa");
@@ -233,17 +260,17 @@ public class Jugador {
                 }
 
                 if (eleccion.equals("1")) {
-                    ((CartaMonstruo) cartaSeleccionada).setIsInAtaque(true);
-                    ((CartaMonstruo) cartaSeleccionada).setIsBocaArriba(true);
+                    cartaSeleccion.setisInAtaque(true);
+                    cartaSeleccion.setBocaArriba(true);
                 } else {
-                    ((CartaMonstruo) cartaSeleccionada).setIsInAtaque(false);
-                    ((CartaMonstruo) cartaSeleccionada).setIsBocaArriba(false);
+                    cartaSeleccion.setisInAtaque(false);
+                    cartaSeleccion.setBocaArriba(false);
                 }
 
                 tablero.aniadirCartaTablero(cartaSeleccionada, this.id);
                 setNoAgregoMonstruo(false);
             } else {
-                if (tablero.getTableroCompartido().get(this.id).getCartasMonstruo().size() < 3) {
+                if (tablero.getTableroCompartido().get(this.id).get("CartasMonstruo").size() < 3) {
                     System.out.println("WARNING| Ya no puedes colocar más cartas monstruos en este turno.");
                 } else {
                     System.out.println("WARNING| Has alcanzado el límite de cartas monstruos en el tablero.");
@@ -253,17 +280,17 @@ public class Jugador {
 
         // Si la carta es trampa
         else if (cartaSeleccionada instanceof CartaTrampa) {
-            if (tablero.getTableroCompartido().get(this.id).getCartasEspeciales().size() < 3) {
+            if (tablero.getTableroCompartido().get(this.id).get("CartasEspeciales").size() < 3) {
                 tablero.aniadirCartaTablero(cartaSeleccionada, this.id);
             } else {
                 System.out.println("WARNING| No se puede agregar más cartas mágicas o trampas.");
             }
         }
-
+        
         // Si la carta es mágica
         else if (cartaSeleccionada instanceof CartaMagica) {
             if (tablero.validarAgregacionCartaMagica((CartaMagica) cartaSeleccionada, this)) {
-                List<CartaMonstruo> espacioCartasMonstruo = tablero.getTableroCompartido().get(this.id).getCartasMonstruo();
+                ArrayList<Carta> espacioCartasMonstruo = tablero.getTableroCompartido().get(this.id).get("CartasMonstruo");
                 System.out.println("| Selecciona el monstruo al cual asociar la carta mágica");
 
                 for (int i = 0; i < espacioCartasMonstruo.size(); i++) {
@@ -276,7 +303,7 @@ public class Jugador {
                     seleccionMonstruo = scanner.nextLine();
                 }
 
-                CartaMonstruo cartaAAsociar = espacioCartasMonstruo.get(Integer.parseInt(seleccionMonstruo) - 1);
+                CartaMonstruo cartaAAsociar = (CartaMonstruo)(espacioCartasMonstruo.get(Integer.parseInt(seleccionMonstruo) - 1));
 
                 if (cartaAAsociar.getTipoMonstruo().equals(((CartaMagica) cartaSeleccionada).getTipoMonstruo())) {
                     cartaAAsociar.setCartaMagica((CartaMagica) cartaSeleccionada);
@@ -288,6 +315,7 @@ public class Jugador {
                 System.out.println("WARNING| No existe carta monstruo en el tablero con la cual asociarla.");
             }
         }
+        scanner.close();
     }
 
     public void imprimirMano() {
@@ -316,30 +344,33 @@ public class Jugador {
         List<CartaMagica> cartasMagicas = new ArrayList<>();
         List<CartaTrampa> cartasTrampa = new ArrayList<>();
     
-        for (CartaMonstruo carta : tablero.getTableroCompartido().get(this.getId()).getCartasMonstruo()) {
-            if (carta.isInAtaque() && carta.puedeAtacar()) {
-                monstruosAtacantes.add(carta);
+        for (Carta carta : tablero.getTableroCompartido().get(this.getId()).get("CartasMonstruo")) {
+            CartaMonstruo carta_c = (CartaMonstruo)carta;
+            if (carta_c.getisInAtaque() && carta_c.getPuedeAtacar()) {
+                monstruosAtacantes.add(carta_c);
             }
         }
     
         // Si no hay monstruos en ataque, cambiar a modo defensa
         if (monstruosAtacantes.isEmpty()) {
             System.out.println("La " + this.getNombre() + " no tiene monstruos disponibles para atacar. Se coloca a la defensiva.");
-            for (CartaMonstruo carta : tablero.getTableroCompartido().get(this.getId()).getCartasMonstruo()) {
-                if (carta.isInAtaque()) {
-                    carta.setInAtaque(false);
-                    carta.setBocaArriba(false);
+            for (Carta carta : tablero.getTableroCompartido().get(this.getId()).get("CartasMonstruo")) {
+                CartaMonstruo carta_c = (CartaMonstruo)carta;
+                if (carta_c.getisInAtaque()) {
+                    carta_c.setisInAtaque(noAgregoMonstruo);
+                    carta_c.setBocaArriba(false);
                     System.out.println("---> " + this.getNombre() + " pone al monstruo " + carta.getNombre() + " en defensa.");
                 }
             }
+            scanner.close();
             return;
         }
     
         // Obtener monstruos del oponente
-        List<CartaMonstruo> monstruosOponente = tablero.getTableroCompartido().get(oponente.getId()).getCartasMonstruo();
+        ArrayList<Carta> monstruosOponente = tablero.getTableroCompartido().get(oponente.getId()).get("CartasMonstruo");
     
         // Obtener cartas mágicas y trampa
-        for (Carta carta : tablero.getTableroCompartido().get(this.getId()).getCartasEspeciales()) {
+        for (Carta carta : tablero.getTableroCompartido().get(this.getId()).get("CartasEspeciales")) {
             if (carta instanceof CartaTrampa) {
                 cartasTrampa.add((CartaTrampa) carta);
             } else if (carta instanceof CartaMagica) {
@@ -350,14 +381,15 @@ public class Jugador {
         // Función de carta mágica
         for (CartaMagica cartaMagica : cartasMagicas) {
             if (tablero.validarAgregacionCartaMagica(cartaMagica, this)) {
-                for (CartaMonstruo monstruo : tablero.getTableroCompartido().get(this.getId()).getCartasMonstruo()) {
-                    if (monstruo.getTipoMonstruo().equals(cartaMagica.getTipoMonstruo())) {
+                for (Carta monstruo : tablero.getTableroCompartido().get(this.getId()).get("CartasMonstruo")) {
+                    CartaMonstruo monstruo_c = (CartaMonstruo)monstruo; //casting
+                    if (monstruo_c.getTipoMonstruo().equals(cartaMagica.getTipoMonstruo())) {
                         if (cartaMagica.getIncrementoAtaque() > 0) {
-                            monstruo.setAtaque(monstruo.getAtaque() + cartaMagica.getIncrementoAtaque());
-                            System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo.getNombre() + "', aumentando su ataque en " + cartaMagica.getIncrementoAtaque() + ".");
+                            monstruo_c.setAtaque(monstruo_c.getAtaque() + cartaMagica.getIncrementoAtaque());
+                            System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo_c.getNombre() + "', aumentando su ataque en " + cartaMagica.getIncrementoAtaque() + ".");
                         } else if (cartaMagica.getIncrementoDefensa() > 0) {
-                            monstruo.setDefensa(monstruo.getDefensa() + cartaMagica.getIncrementoDefensa());
-                            System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo.getNombre() + "', aumentando su defensa en " + cartaMagica.getIncrementoDefensa() + ".");
+                            monstruo_c.setDefensa(monstruo_c.getDefensa() + cartaMagica.getIncrementoDefensa());
+                            System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo_c.getNombre() + "', aumentando su defensa en " + cartaMagica.getIncrementoDefensa() + ".");
                         }
                         tablero.quitarCartaTablero(cartaMagica, this.getId());
                         break;
@@ -383,15 +415,17 @@ public class Jugador {
                 System.out.println(this.getNombre() + " ha terminado su fase de batalla.");
                 System.out.println("=========================================================");
             } else {
-                for (CartaMonstruo cartaMounstroRival : monstruosOponente) {
-                    if ((cartaMounstroRival.getAtaque() + cartaMounstroRival.getCartaMagica().getIncrementoAtaque()) < 
+                for (Carta cartaMounstroRival : monstruosOponente) {
+                    CartaMonstruo cartaMonstruoRival = (CartaMonstruo)cartaMounstroRival;
+                    if ((cartaMonstruoRival.getAtaque() + cartaMonstruoRival.getCartaMagica().getIncrementoAtaque()) < 
                         (cartaAtacante.getAtaque() + cartaAtacante.getCartaMagica().getIncrementoAtaque())) {
     
                         System.out.println("---+ " + cartaAtacante.getNombre() + " ataca a " + cartaMounstroRival.getNombre() + "!");
-                        int danioAEnemigo = tablero.ataqueEntreCartas(cartaAtacante, cartaMounstroRival, this, oponente).getDanioAEnemigo();
-                        int danioAJugador = tablero.ataqueEntreCartas(cartaAtacante, cartaMounstroRival, this, oponente).getDanioAJugador();
-                        this.setPuntosVida(this.getPuntosVida() - danioAJugador);
-                        oponente.setPuntosVida(oponente.getPuntosVida() - danioAEnemigo);
+                        Tupla tupla = tablero.ataqueEntreCartas(cartaAtacante, cartaMonstruoRival, this, oponente);
+                        Integer danioAEnemigo = (Integer)(tupla.getObj1());
+                        Integer danioAJugador = (Integer)(tupla.getObj2());
+                        this.puntosVida -= danioAJugador;
+                        oponente.puntosVida -= danioAEnemigo;
                         cartaAtacante.setPuedeAtacar(false);
     
                     } else {
@@ -400,6 +434,7 @@ public class Jugador {
                 }
             }
         }
+        scanner.close();
     }
     
     public void llenarTableroMaquina(Tablero tablero) {
@@ -431,6 +466,7 @@ public class Jugador {
         System.out.println(getNombre() + " ha terminado de organizar su tablero.");
         System.out.println("Enter para seguir");
         scanner.nextLine(); // pausa para seguir
+        scanner.close();
     }
 
     public boolean esDerrotado() {
@@ -445,7 +481,7 @@ public class Jugador {
     @Override
     public String toString() {
         return String.format("Datos Jugador - %s -\nId: %d\nPuntos de vida: %d\n%s\n%s\n-----------------------------------",
-                getNombre(), getId(), getPuntosVida(), " Baraja ".center(25, "-"), getDeck().toString());
+                getNombre(), getId(), getPuntosVida(), " Baraja ", getDeck().toString());
     }
 
     

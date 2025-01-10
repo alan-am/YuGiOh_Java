@@ -1,7 +1,6 @@
 package ec.edu.espol;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.ArrayList;
 
 public class Tablero {
@@ -20,7 +19,7 @@ public class Tablero {
         tableroCompartido = new HashMap<>();
 
         HashMap<String, ArrayList<Carta>> espacioJugador1 = new HashMap<>();
-        espacioJugador1.put("CartasMonstruo", new ArrayList<Carta>());
+        espacioJugador1.put("CartasMonstruo", new ArrayList<>());
         espacioJugador1.put("CartasEspeciales", new ArrayList<>());
 
         HashMap<String, ArrayList<Carta>> espacioJugador2 = new HashMap<>();
@@ -257,6 +256,11 @@ public class Tablero {
     //Falta metodo toString
 
     
+    
+
+
+
+
     
     //getters and setters
     public int getId() {
