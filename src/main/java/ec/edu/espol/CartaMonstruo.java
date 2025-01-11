@@ -49,13 +49,30 @@ public class CartaMonstruo extends Carta{
 
     public String toString3() {
         String modo = this.isInAtaque ? "Ataque" : "Defensa";
+        Integer incAtaque = 0;
+        Integer incDefensa = 0;
+
+        if(this.cartaMagica != null){
+            incAtaque = (Integer)(this.obtenerIncrementosATKyDEF().obj1);
+            incDefensa = (Integer)(this.obtenerIncrementosATKyDEF().obj2);
+        }
         return "CARTA MONSTRUO || " + this.getNombre() +
                " [MODO " + modo + "]" +
-               " [ATK: " + this.ataque + " + " + this.cartaMagica.getIncrementoAtaque() +
-               ", DEF: " + this.defensa + " + " + this.cartaMagica.getIncrementoDefensa() + "]" +
+               " [ATK: " + this.ataque + " + " + incAtaque +
+               ", DEF: " + this.defensa + " + " + incDefensa + "]" +
                "   Tipo: " + this.tipoMonstruo;
     }
     
+    public Tupla obtenerIncrementosATKyDEF(){
+        if(this.getCartaMagica() != null){
+            //si tiene asociada -> se guarda sus incrementos de ATK y DEF y se devuelven
+            Integer incAtk = this.getCartaMagica().getIncrementoAtaque();
+            Integer incDef = this.getCartaMagica().getIncrementoDefensa();
+            return new Tupla(incAtk, incDef);
+        }else{
+            return new Tupla(0,0);
+        }
+    }
     
 
     //getters and setters
