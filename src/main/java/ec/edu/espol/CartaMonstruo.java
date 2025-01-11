@@ -143,15 +143,13 @@ public class CartaMonstruo extends Carta{
 
 
 	public boolean getIsBocaArriba() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getIsBocaArriba'");
+        return isBocaArriba;
 	}
 
 
 
     public boolean getIsInAtaque() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIsInAtaque'");
+        return isInAtaque;
     }
 
     

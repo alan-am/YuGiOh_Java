@@ -94,6 +94,10 @@ public class Partida {
             j1.imprimirMano();
             System.out.println("Desea añadir una carta a su tablero?");
             eleccion = Utilitaria.inputString("1.Si\n2.No");
+            //validando la entrada
+            while (!eleccion.equals("1") && !eleccion.equals("2")) {
+                eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
+            }
             System.out.println(eleccion);
             while (eleccion.equals("1")){
                 j1.jugarCarta(this);

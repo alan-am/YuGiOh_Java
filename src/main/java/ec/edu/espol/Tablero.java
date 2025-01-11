@@ -114,7 +114,7 @@ public class Tablero {
 
         if(cm.getCartaMagica() != null ){
             int id_cartaMagicaAsociada = cm.getCartaMagica().getId();
-            ArrayList<Carta> espacioCartasEspecialesJ = tableroCompartido.get(jugador.getId()).get("Cartas Especiales");
+            ArrayList<Carta> espacioCartasEspecialesJ = tableroCompartido.get(jugador.getId()).get("CartasEspeciales");
             int i = 0; 
             Integer indiceCarta = null;
             for(Carta cartaEspecial : espacioCartasEspecialesJ ){

@@ -51,7 +51,7 @@ public class Jugador {
 
         // "1.Si\n2.No"
         //lectura de input
-        String eleccion = Utilitaria.inputString("Si\n2.No");
+        String eleccion = Utilitaria.inputString("1. Si\n2. No");
 
     
         while (!eleccion.equals("1") && !eleccion.equals("2")) {
@@ -91,12 +91,15 @@ public class Jugador {
         }
 
         System.out.println("|    Ejecutar ataque?");
-        String eleccion = Utilitaria.inputString("Si\n2.No");
+        String eleccion = Utilitaria.inputString("1. Si\n2. No");
         // Validamos la elección del jugador
         while (!eleccion.equals("1") && !eleccion.equals("2")) {
             eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
         }
 
+        //if para el caso en que el jugador presione 'si' pero no tiene cartas mosntruo en ataque
+        if(!tablero.hayCartasMonstruoEnAtaque(this) && eleccion.equals("1")) System.out.println("No existen cartas monstruos en ataque");
+     
         // Validacion existen cartas monstruo en ataque
         while (tablero.hayCartasMonstruoEnAtaque(this) && eleccion.equals("1")) {
             System.out.println("Elige tu carta de ataque: ");
@@ -153,7 +156,7 @@ public class Jugador {
                     for (Carta cartaMonstruo : espacioEnemigo) {
                         CartaMonstruo cartaMonstruo_c = (CartaMonstruo)cartaMonstruo;
                         if (cartaMonstruo_c.getIsBocaArriba()) {
-                            System.out.println((i + 1) + ". " + cartaMonstruo_c.toString2());
+                            System.out.println((i + 1) + ". " + cartaMonstruo_c.toString3());
                         } else {
                             System.out.println((i + 1) + ". CARTA MONSTRUO|| *** Carta boca abajo ***");
                         }
@@ -195,7 +198,7 @@ public class Jugador {
 
             // Pregunta si quiere ejecutar el ataque nuevamente
             System.out.println("|    Ejecutar otro ataque?");
-            eleccion = Utilitaria.inputString("Si\n2.No");
+            eleccion = Utilitaria.inputString("1. Si\n2. No");
             while (!eleccion.equals("1") && !eleccion.equals("2")) {
                 eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
             }
@@ -229,7 +232,7 @@ public class Jugador {
                 //convertimos la seleccion en una carta monstruo
                 CartaMonstruo cartaMonstruoSelec = (CartaMonstruo)cartaSeleccionada;
                 System.out.println("Elige el modo de la carta: ");
-                String eleccion = Utilitaria.inputString("1. Modo Ataque \n 2. Modo Defensa");
+                String eleccion = Utilitaria.inputString("1. Modo Ataque \n2. Modo Defensa");
                 while (!eleccion.equals("1") && !eleccion.equals("2")) {
                     eleccion = Utilitaria.inputString("Elige un número entre 1 y 2.");
                 }
@@ -356,13 +359,17 @@ public class Jugador {
                     CartaMonstruo monstruo_c = (CartaMonstruo)monstruo; //casting
                     if (monstruo_c.getTipoMonstruo().equals(cartaMagica.getTipoMonstruo())) {
                         if (cartaMagica.getIncrementoAtaque() > 0) {
-                            monstruo_c.setAtaque(monstruo_c.getAtaque() + cartaMagica.getIncrementoAtaque());
+                            //no se debe alterar el ataque de la carta base
+                            //monstruo_c.setAtaque(monstruo_c.getAtaque() + cartaMagica.getIncrementoAtaque());
                             System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo_c.getNombre() + "', aumentando su ataque en " + cartaMagica.getIncrementoAtaque() + ".");
+                            monstruo_c.setCartaMagica(cartaMagica);
                         } else if (cartaMagica.getIncrementoDefensa() > 0) {
-                            monstruo_c.setDefensa(monstruo_c.getDefensa() + cartaMagica.getIncrementoDefensa());
+                            //monstruo_c.setDefensa(monstruo_c.getDefensa() + cartaMagica.getIncrementoDefensa());
                             System.out.println("---> " + this.getNombre() + " equipa '" + cartaMagica.getNombre() + "' a '" + monstruo_c.getNombre() + "', aumentando su defensa en " + cartaMagica.getIncrementoDefensa() + ".");
+                            monstruo_c.setCartaMagica(cartaMagica);
                         }
-                        tablero.quitarCartaTablero(cartaMagica, this.getId());
+                        //si se equipa no se elimina del tablero, solo se elimina si el monstruo q la equipo es eliminado
+                        //tablero.quitarCartaTablero(cartaMagica, this.getId());
                         break;
                     }
                 }
@@ -386,8 +393,9 @@ public class Jugador {
                 System.out.println(this.getNombre() + " ha terminado su fase de batalla.");
                 System.out.println("=========================================================");
             } else {
-                for (Carta cartaMounstroRival : monstruosOponente) {
-                    CartaMonstruo cartaMonstruoRival = (CartaMonstruo)cartaMounstroRival;
+                //uso de for clasico para evitar errores.
+                for(int i = 0; i < monstruosOponente.size(); i++){
+                    CartaMonstruo cartaMonstruoRival = (CartaMonstruo)monstruosOponente.get(i);
                     //if
                     //obtenemos el incremento de ataque de la carta rival y de la propia
         
@@ -395,7 +403,7 @@ public class Jugador {
                     Integer incAtaqueCartaRival = (Integer)(cartaMonstruoRival.obtenerIncrementosATKyDEF().obj1);
                     if ((cartaMonstruoRival.getAtaque() + incAtaqueCartaRival) < (cartaAtacante.getAtaque() + incAtaqueCartaEleg)) {
     
-                        System.out.println("---+ " + cartaAtacante.getNombre() + " ataca a " + cartaMounstroRival.getNombre() + "!");
+                        System.out.println("---+ " + cartaAtacante.getNombre() + " ataca a " + cartaMonstruoRival.getNombre() + "!");
                         Tupla tupla = tablero.ataqueEntreCartas(cartaAtacante, cartaMonstruoRival, this, oponente);
                         Integer danioAEnemigo = (Integer)(tupla.obj1);
                         Integer danioAJugador = (Integer)(tupla.obj2);
@@ -404,7 +412,7 @@ public class Jugador {
                         cartaAtacante.setPuedeAtacar(false);
     
                     } else {
-                        System.out.println("La Maquina ha decidido no usar a " + cartaAtacante.getNombre() + " para atacar a tu carta " + cartaMounstroRival.getNombre() + " porque no le conviene.");
+                        System.out.println("La Maquina ha decidido no usar a " + cartaAtacante.getNombre() + " para atacar a tu carta " + cartaMonstruoRival.getNombre() + " porque no le conviene.");
                     }
                 }
             }
