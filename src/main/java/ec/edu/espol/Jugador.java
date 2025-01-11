@@ -1,7 +1,6 @@
 package ec.edu.espol;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Jugador {
     public static int jugadores; //contador de instancias
@@ -49,16 +48,14 @@ public class Jugador {
         Tablero tablero = partida.getTablero();
         ArrayList<Carta> espacioCartasMonstruo = tablero.getTableroCompartido().get(this.id).get("CartasMonstruo");
         System.out.println("¿Deseas cambiar la posición de una carta?");
-        System.out.println("1. Sí");
-        System.out.println("2. No");
+
+        // "1.Si\n2.No"
         //lectura de input
-        Scanner sc = new Scanner(System.in);
-        String eleccion = sc.nextLine();
+        String eleccion = Utilitaria.inputString("Si\n2.No");
 
     
         while (!eleccion.equals("1") && !eleccion.equals("2")) {
-            System.out.println("Elige un número entre 1 y 2");
-            eleccion = sc.nextLine();
+            eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
         }
 
         if (eleccion.equals("1") && tablero.hayCartasMonstruoBocaArriba(this)) {
@@ -69,10 +66,9 @@ public class Jugador {
                 i++;
             }
 
-            String seleccion = sc.nextLine();
+            String seleccion = Utilitaria.inputString("");
             while (!seleccion.matches("\\d+") || Integer.parseInt(seleccion) > i || Integer.parseInt(seleccion) <= 0) {
-                System.out.println("Por favor, ingresa un número válido.");
-                seleccion = sc.nextLine();
+                seleccion = Utilitaria.inputString("Por favor, ingresa un número válido.");
             }
 
             Carta cartaSeleccionada = espacioCartasMonstruo.get(Integer.parseInt(seleccion) - 1);
@@ -81,7 +77,6 @@ public class Jugador {
         } else {
             System.out.println("WARNING| No existen cartas Monstruo boca Arriba para cambiar su posición");
         }
-        sc.close();
     }
 
 
@@ -96,13 +91,10 @@ public class Jugador {
         }
 
         System.out.println("|    Ejecutar ataque?");
-        Scanner sc = new Scanner(System.in);
-        String eleccion = sc.nextLine();
-
+        String eleccion = Utilitaria.inputString("Si\n2.No");
         // Validamos la elección del jugador
         while (!eleccion.equals("1") && !eleccion.equals("2")) {
-            System.out.println("Elige un número entre 1 y 2");
-            eleccion = sc.nextLine();
+            eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
         }
 
         // Validacion existen cartas monstruo en ataque
@@ -115,12 +107,11 @@ public class Jugador {
                 i++;
             }
 
-            String seleccion = sc.nextLine();
+            String seleccion = Utilitaria.inputString("");
 
             // Validación de entrada
             while (!seleccion.matches("\\d+") || Integer.parseInt(seleccion) > i || Integer.parseInt(seleccion) <= 0) {
-                System.out.println("Por favor, ingresa un número válido.");
-                seleccion = sc.nextLine();
+                seleccion = Utilitaria.inputString("Por favor, ingresa un número válido.");
             }
 
             Carta cartaSeleccionada = espacioCartasMonstruoJ.get(Integer.parseInt(seleccion) - 1);
@@ -170,12 +161,11 @@ public class Jugador {
                         i++;
                     }
 
-                    seleccion = sc.nextLine();
+                    seleccion = Utilitaria.inputString("");
 
                     // Validación de entrada
                     while (!seleccion.matches("\\d+") || Integer.parseInt(seleccion) > i || Integer.parseInt(seleccion) <= 0) {
-                        System.out.println("Por favor, ingresa un número válido.");
-                        seleccion = sc.nextLine();
+                        seleccion = Utilitaria.inputString("Por favor, ingresa un número válido.");
                     }
 
                     Carta cartaEnemigaSeleccionada = espacioEnemigo.get(Integer.parseInt(seleccion) - 1);
@@ -205,21 +195,17 @@ public class Jugador {
             }
 
             // Pregunta si quiere ejecutar el ataque nuevamente
-            System.out.println("|    Ejecutar ataque?");
-            eleccion = sc.nextLine();
+            System.out.println("|    Ejecutar otro ataque?");
+            eleccion = Utilitaria.inputString("Si\n2.No");
             while (!eleccion.equals("1") && !eleccion.equals("2")) {
-                System.out.println("Elige un número entre 1 y 2");
-                eleccion = sc.nextLine();
+                eleccion = Utilitaria.inputString("Elige un número entre 1 y 2");
             }
-            sc.close();
         }
     }
 
 
     public void jugarCarta(Partida partida) {
         Tablero tablero = partida.getTablero();
-
-        Scanner scanner = new Scanner(System.in);
 
         // Mostrar las cartas en mano
         System.out.println("Cartas en mano");
@@ -228,13 +214,11 @@ public class Jugador {
             System.out.println((i + 1) + ". " + cartasEnMano.get(i).toString2());
         }
 
-        System.out.println("Selecciona la carta a añadir: ");
-        String seleccion = scanner.nextLine();
+        String seleccion = Utilitaria.inputString("Selecciona la carta a añadir: ");
 
         // Validación de la entrada
         while (!seleccion.matches("\\d+") || Integer.parseInt(seleccion) > cartasEnMano.size() || Integer.parseInt(seleccion) <= 0) {
-            System.out.println("Por favor, ingresa un número válido.");
-            seleccion = scanner.nextLine();
+            seleccion = Utilitaria.inputString("Por favor, ingresa un número válido.");
         }
 
         Carta cartaSeleccionada = cartasEnMano.get(Integer.parseInt(seleccion) - 1);
@@ -244,13 +228,9 @@ public class Jugador {
         if (cartaSeleccionada instanceof CartaMonstruo) {
             if (tablero.getTableroCompartido().get(this.id).get("CartasMonstruo").size() < 3 && noAgregoMonstruo) {
                 System.out.println("Elige el modo de la carta: ");
-                System.out.println("1. Modo Ataque");
-                System.out.println("2. Modo Defensa");
-
-                String eleccion = scanner.nextLine();
+                String eleccion = Utilitaria.inputString("1. Modo Ataque \n 2. Modo Defensa");
                 while (!eleccion.equals("1") && !eleccion.equals("2")) {
-                    System.out.println("Elige un número entre 1 y 2.");
-                    eleccion = scanner.nextLine();
+                    eleccion = Utilitaria.inputString("Elige un número entre 1 y 2.");
                 }
 
                 if (eleccion.equals("1")) {
@@ -291,10 +271,9 @@ public class Jugador {
                     System.out.println((i + 1) + ". " + espacioCartasMonstruo.get(i).toString3());
                 }
 
-                String seleccionMonstruo = scanner.nextLine();
+                String seleccionMonstruo = Utilitaria.inputString("");
                 while (!seleccionMonstruo.matches("\\d+") || Integer.parseInt(seleccionMonstruo) > espacioCartasMonstruo.size() || Integer.parseInt(seleccionMonstruo) <= 0) {
-                    System.out.println("Por favor, ingresa un número válido.");
-                    seleccionMonstruo = scanner.nextLine();
+                    seleccionMonstruo = Utilitaria.inputString("Por favor, ingresa un número válido.");
                 }
 
                 CartaMonstruo cartaAAsociar = (CartaMonstruo)(espacioCartasMonstruo.get(Integer.parseInt(seleccionMonstruo) - 1));
@@ -309,7 +288,6 @@ public class Jugador {
                 System.out.println("WARNING| No existe carta monstruo en el tablero con la cual asociarla.");
             }
         }
-        scanner.close();
     }
 
     public void imprimirMano() {
@@ -329,9 +307,8 @@ public class Jugador {
     }
         
     public void declararBatallaComoMaquina(Tablero tablero, Jugador oponente) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("La " + this.getNombre() + " te va a declarar batalla!! " + oponente.getNombre() + " estás preparadx?: ");
-        scanner.nextLine();
+        System.out.println("La " + this.getNombre() + " te va a declarar batalla!! " + oponente.getNombre() + " estás preparadx? ");
+        Utilitaria.simularEnter("> presione enter: ");
     
         // Obtener monstruos en ataque que pueden atacar
         ArrayList<CartaMonstruo> monstruosAtacantes = new ArrayList<>();
@@ -356,7 +333,6 @@ public class Jugador {
                     System.out.println("---> " + this.getNombre() + " pone al monstruo " + carta.getNombre() + " en defensa.");
                 }
             }
-            scanner.close();
             return;
         }
     
@@ -428,13 +404,11 @@ public class Jugador {
                 }
             }
         }
-        scanner.close();
     }
     
     public void llenarTableroMaquina(Tablero tablero) {
         System.out.println("La " + getNombre() + " está organizando su tablero.");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Loading....");
+        Utilitaria.simularEnter("Loading....");
         // mano_maquina sería la lista de cartas en mano del jugador
         ArrayList<Carta> manoMaquina = new ArrayList<>(getCartasEnMano()); //debe ser una copiar para que no se modifique
         System.out.println("");
@@ -461,7 +435,6 @@ public class Jugador {
         System.out.println("Enter para seguir");
         System.out.println("Le quite el enter porque da muchos problemas");
         System.out.println("");
-        scanner.close();
     }
 
     public boolean esDerrotado() {

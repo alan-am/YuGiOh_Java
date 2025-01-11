@@ -1,7 +1,6 @@
 package ec.edu.espol;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import ec.edu.espol.Partida;
 
 public class Partida {
@@ -45,9 +44,7 @@ public class Partida {
                     fasePrincipal(j1,maquina);
                     System.out.println("-".repeat(30));
                     faseBatalla(j1,maquina);
-                    System.out.println("> Da Enter para mostrar el tablero actualizado");
-                    //new java.util.Scanner(System.in).nextLine(); 
-                    System.out.println("-------------------------------enter eliminado");
+                    Utilitaria.simularEnter("> Da Enter para mostrar el tablero actualizado");
                     System.out.println(this.getTablero().toString()); 
                     resetearEstadoCartasMonstruo();
                     cambiarTurno();
@@ -57,9 +54,7 @@ public class Partida {
        if(!j1.esDerrotado() && !maquina.esDerrotado()) 
        {
         this.ronda++;
-        System.out.println("Presione Enter para comenzar una nueva ronda");
-        //new java.util.Scanner(System.in).nextLine();
-        System.out.println("--------------------------enter eliminado");
+        Utilitaria.simularEnter("Presione Enter para comenzar una nueva ronda");
         System.out.println("Loading...");
         System.out.println("------> Ronda " + this.ronda + " comienza:");
         System.out.println("==".repeat(40));
@@ -78,9 +73,7 @@ public class Partida {
         } else {
             if (jugadorActual == 1) {
                 System.out.println("-Es tu turno de robar una carta-");
-                System.out.println("Presiona enter para tomar la carta del Deck...");
-                //new java.util.Scanner(System.in).nextLine();
-                System.out.println("------------------------------enter eliminado para evitar problemas");
+                Utilitaria.simularEnter("Presiona enter para tomar la carta del Deck...");
                 j1.tomarCartaEnTurno();
             } else {
                 System.out.println("-".repeat(30) + " Turno de la máquina " + "-".repeat(30));
@@ -93,30 +86,24 @@ public class Partida {
 
       //@SuppressWarnings("resource")
     public void fasePrincipal(Jugador j1, Jugador maquina) {
-        Scanner sc = new Scanner(System.in);
         String eleccion;
         if (jugadorActual == 1) {
             j1.setNoAgregoMonstruo(true);
-            System.out.println("|--> Presiona enter para visualizar tus cartas en mano ");
-            //new Scanner(System.in).nextLine();
+            Utilitaria.simularEnter("|--> Presiona enter para visualizar tus cartas en mano ");
             System.out.println("enter quitado para evitar problemas--------------------------------------");
             j1.imprimirMano();
-            System.out.println("Desea añadir una carta a su tabler?");
-            System.out.println("1.Si\n2.No");
-            eleccion = sc.nextLine();
+            System.out.println("Desea añadir una carta a su tablero?");
+            eleccion = Utilitaria.inputString("1.Si\n2.No");
             System.out.println(eleccion);
             while (eleccion.equals("1")){
                 j1.jugarCarta(this);
                 System.out.println("Desea añadir una carta en su tablero?");
-                System.out.println("1.Si\n2.No");
-                eleccion = sc.nextLine();
+                eleccion = Utilitaria.inputString("1.Si\n2.No");
             }
         } else {
             maquina.setNoAgregoMonstruo(true);
             maquina.llenarTableroMaquina(tablero);
         }
-        sc.close();
-
     }
 
 

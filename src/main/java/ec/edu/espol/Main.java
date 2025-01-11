@@ -1,5 +1,4 @@
 package ec.edu.espol;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,10 +11,7 @@ public class Main {
 
         // INICIO DEL JUEGO
         System.out.println("\n \n \nEmpieza el juego!");
-        System.out.println("Presiona enter para continuar");
-        try (Scanner scanner = new Scanner(System.in)) {
-            scanner.nextLine(); // Espera la entrada del usuario
-        }
+        Utilitaria.simularEnter("Presiona enter para continuar: ");
         System.out.println("");
 
         // Inicio con sorteo de quien empieza
