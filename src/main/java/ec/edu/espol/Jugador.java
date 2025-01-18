@@ -339,7 +339,20 @@ public class Jugador {
             }
             return;
         }
-    
+        else {
+            // Si hay monstruos en defensa, intentar colocarlos en ataque
+            System.out.println("La " + this.getNombre() + " decide atacar con sus monstruos.");
+            for (Carta carta : tablero.getTableroCompartido().get(this.getId()).get("CartasMonstruo")) {
+                CartaMonstruo carta_c = (CartaMonstruo) carta;
+                if (!carta_c.getisInAtaque()) {
+                    carta_c.setisInAtaque(true);
+                    carta_c.setBocaArriba(true);
+                    System.out.println("---> " + this.getNombre() + " pone al monstruo " + carta.getNombre() + " en ataque.");
+                }
+            }
+        }
+            
+            
         // Obtener monstruos del oponente
         ArrayList<Carta> monstruosOponente = tablero.getTableroCompartido().get(oponente.getId()).get("CartasMonstruo");
     
